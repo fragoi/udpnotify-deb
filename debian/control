@@ -1,0 +1,12 @@
+Source: udpnotify
+Maintainer: Fra Goi <fragoidev@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 4.5.0
+Build-Depends: debhelper (>= 12), meson (>= 0.57) | meson-installer (>= 0.57)
+
+Package: udpnotify
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Display notifications received via UDP
+ TODO: long description
