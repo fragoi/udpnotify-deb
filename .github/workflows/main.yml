@@ -1,0 +1,53 @@
+name: Create release
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - .github/**
+  repository_dispatch:
+    types:
+      - new_upstream_version
+
+permissions:
+  contents: write
+
+env:
+  GIT_USER_NAME: Fra Bot
+  GIT_USER_EMAIL: fragoibot@gmail.com
+  DEBPACKAGE: udpnotify
+  DEBDIST: focal
+
+jobs:
+
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.exportVersion.outputs.NEW_VERSION }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: fragoi/bash-actions@main
+      - name: Create release
+        run: |
+          debNewVersion "${{ github.event.client_payload.upstream_version }}"
+      - name: Export version
+        id: exportVersion
+        run: |
+          outputSharedVars NEW_VERSION
+
+  notify-ppa:
+    needs: [release]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    if: ${{ needs.release.outputs.new_version }}
+    steps:
+      - uses: fragoi/bash-actions@main
+      - name: Notify PPA repository
+        env:
+          NEW_VERSION: ${{ needs.release.outputs.new_version }}
+          GITHUB_TOKEN: ${{ secrets.PPA_TOKEN }}
+        run: |
+          repositoryDispatch fraorg/udpnotify-ppa \
+            -f event_type=new_version \
+            -f client_payload[version]="$NEW_VERSION"
