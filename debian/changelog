@@ -1,3 +1,9 @@
+udpnotify (0.2.0-1) focal; urgency=medium
+
+  * upstream version 0.2.0
+
+ -- Fra Bot <fragoibot@gmail.com>  Thu, 06 Mar 2025 18:02:15 +0000
+
 udpnotify (0.1.0-2) focal; urgency=medium
 
   * add glib build dependency
