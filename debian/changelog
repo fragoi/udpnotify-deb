@@ -1,3 +1,9 @@
+udpnotify (0.4.0-1) focal; urgency=medium
+
+  * upstream version 0.4.0
+
+ -- Fra Bot <fragoibot@gmail.com>  Mon, 07 Apr 2025 14:12:53 +0000
+
 udpnotify (0.3.0-1) focal; urgency=medium
 
   * upstream version 0.3.0
